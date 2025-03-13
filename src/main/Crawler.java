@@ -88,11 +88,10 @@ public class Crawler {
                 docId = dbManage.getPageId(currentUrl);
                 Date storedLastModified = dbManage.getLastModified(docId); // get the stored date
                 Date getLastModified = pageInfo.getLastModified(); // get the current date
-                if (storedLastModified != null && getLastModified != null && getLastModified.after(storedLastModified)) {
-                    List<String> links = extractLinks(currentUrl);  
-                    links.forEach(link -> urlQueue.add(link)); // add extracted links to Queue
-                    continue;
+                if (storedLastModified != null && getLastModified != null && !getLastModified.after(storedLastModified)) {
+                    continue;  // skip for repeated page
                 }
+
             } else { 
                 docId = dbManage.addPage(currentUrl);  // create page record
             } 
