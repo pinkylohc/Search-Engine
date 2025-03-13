@@ -6,7 +6,7 @@ The readme.txt submitted for the project is in another file.
 
 ## Instructions to Run the Project
 
-1. **Run the Crawler in Main.java:**
+1. **Run the Crawler in Main.java:** (for Mac/Linux, can change to equivalent cmd in window)
    ```sh
    javac -d bin -cp "lib/*" $(find src -name "*.java")
    java -cp "bin:lib/*" main.Main
@@ -60,7 +60,7 @@ _** don’t use the pageIndex to retrieve ‘URL’ for child page, use mapping 
 *   **Description**: Maps parent page IDs to lists of child page IDs.
 *   **Structure**:
     *   **Key**: Integer (Parent Page ID)
-    *   **Value**: List<Integer> (List of Child Page IDs)
+    *   **Value**: List `<Integer>` (List of Child Page IDs)
     
 
 ### childParentMap
@@ -68,7 +68,7 @@ _** don’t use the pageIndex to retrieve ‘URL’ for child page, use mapping 
 *   **Description**: Maps child page IDs to lists of parent page IDs.
 *   **Structure**:
     *   **Key**: Integer (Child Page ID)
-    *   **Value**: List<Integer> (List of Parent Page IDs)
+    *   **Value**: List `<Integer>` (List of Parent Page IDs)
     
 
 ### wordMap
@@ -91,7 +91,7 @@ _** don’t use the pageIndex to retrieve ‘URL’ for child page, use mapping 
 *   **Description**: Maps word IDs to lists of postings for the body of the page.
 *   **Structure**:
     *   **Key**: Integer (Word ID)
-    *   **Value**: List<Posting> (refer to `Posting.java` for more info)
+    *   **Value**: List `<Posting>` (refer to `Posting.java` for more info)
         
 
 ### titleIndex
@@ -99,4 +99,4 @@ _** don’t use the pageIndex to retrieve ‘URL’ for child page, use mapping 
 *   **Description**: Maps word IDs to lists of postings for the title of the page.
 *   **Structure**:
     *   **Key**: Integer (Word ID)
-    *   **Value**: List<Posting> (refer to `Posting.java` for more info)
+    *   **Value**: List `<Posting>` (refer to `Posting.java` for more info)

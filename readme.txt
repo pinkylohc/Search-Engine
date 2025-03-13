@@ -5,7 +5,7 @@ Used library
 - java 21.0.6
 
 
-Run the Crawler
+Run the Crawler (for Mac/Linux, can change to equivalent cmd in window)
 1. javac -d bin -cp "lib/*" $(find src -name "*.java")
 2. java -cp "bin:lib/*" main.Main
 
