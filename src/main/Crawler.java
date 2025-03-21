@@ -7,6 +7,7 @@ package main;
  */
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,12 @@ import org.jsoup.select.Elements;
 import main.database.DbManage;
 import main.database.PageInfo;
 import main.utils.Indexer;
+
+import org.htmlparser.beans.StringBean;
+import org.htmlparser.beans.LinkBean;
+import java.util.Vector;
+import java.util.StringTokenizer;
+import jdbm.htree.HTree;
 
 
 public class Crawler {
@@ -123,10 +130,111 @@ public class Crawler {
         //dbManage.printBodyIndex(); 
         //dbManage.printTitleIndex();
         //dbManage.printPageIndex();
+
         dbManage.finalise();
 
     }
 
+    // public String getTitle(int key){
+    //     //dbManage.get
+    // }
 
+    // public String getLastModified(int id){
+    //     return dbManage.getLastModified(id);
+    // }
+
+    // public Vector<String> extractWords(int id){
+    //     String url = dbManage.getUrl(id);
+    //     StringBean sb = new StringBean();
+    //     sb.setURL(url);
+
+    //     Vector<String> words = new Vector<String>();
+	// 	String strings = sb.getStrings();
+	// 	StringTokenizer st = new StringTokenizer(strings);
+
+    //     while (st.hasMoreTokens()){
+	// 		words.add(st.nextToken());
+	// 	}
+
+	// 	return (words);
+    // }
+
+    // public HTree wordFreq(int id) throws ParserException{
+    //     Vector<String> words = extractWords(id);
+    //     FastIterator iter = words;
+    //     String k;
+    //     HTree wf = HTree.createInstance(dbManage);
+    //     while ((k = (String)iter.next()) != null){
+    //         if (wf.get(k)){
+    //             wf.put(k, wf.get(k)+1);
+    //         }
+    //         else{
+    //             wf.put(k,1);
+    //         }
+    //     }
+    //     return wf;
+    // }
     
+    // public Vector<String> extractLinks(int id) throws ParserException{
+    //     String url = dbManage.getUrl(id);
+    //     LinkBean lb = new LinkBean();
+	//     lb.setURL(url);
+
+	// 	Vector<String> links = new Vector<String>();
+	// 	URL[] URL_array = lb.getLinks();
+	//     for(int i=0; i<URL_array.length; i++){
+	//     	System.out.println(URL_array[i]);
+	// 		links.add(URL_array[i].toString());
+	//     }
+	//     return links;
+    // }
+
+    // public Set<String> getVisited(){
+    //     return visitedUrl;
+    // }
+
+    // public Vector<String> getKeys(){
+    //     return dbManage.keys();
+    //     dbManage.getD
+    // }
+    
+    public String getTitle(){
+        //url/page id (pageMap)
+        int pageid = dbManage.pageMap
+        //get pageID -> page index
+        //get page title
+    }
+
+    public String getURL(){
+        //pageid -> url (pageidmap)
+        //get page index
+        //get url
+    }
+
+    public Date getLastModification(){
+        //url -> pageid (pageMap)
+        //get page id -> page index
+        //get last modification date
+    }
+
+    public Date getSize(){
+        //url -> pageid (pageMap)
+        //get page id -> page index
+        //get size
+    }
+
+    public Map<Integer,Integer> getKeywords(){
+        //url -> pageid (pageMap)
+        //get page id -> page index
+        //get body word list
+        //wordid -> words
+        //output as HTree?
+    }
+
+    public List<String> getChildren(){
+        //url -> pageid (pageMap)
+        //get parent page id -> page Index
+        //get list of child page IDs
+        //map to page urls via pageid index
+    }
 }
