@@ -103,7 +103,7 @@ public class DbManage {
     }
 
     public int addPage (String url) throws IOException{ // new URL -> add to pageMap, pageIndex
-        // todo: add page info to pageIndex, childparent map
+        if(containsUrl(url)) return getPageId(url);
         pageMap.put(url, pageidCounter);
         pageidMap.put(pageidCounter, url);
         pageidCounter++;
@@ -173,14 +173,13 @@ public class DbManage {
     }
 
 
-
     /************* parentChildMap && childParentMap Operation ****************/
         //parentChildMap: parent page id -> list of child page id
         //childParentMap: child page id -> parent page id
 
     @SuppressWarnings("unchecked")
     public void updateParentChildMap(List<String> links, String url) throws IOException {
-        int parentPageId = this.getPageId(url);
+        Integer parentPageId = this.getPageId(url);
         
         // Initialize the parent's list of child page IDs if it doesn't exist
         List<Integer> childPageIds = (List<Integer>) parentChildMap.get(parentPageId);
@@ -191,18 +190,17 @@ public class DbManage {
         // Process each child URL
         for (String childUrl : links) {
             int childPageId;
-            if (containsUrl(childUrl)) {
+            if (containsUrl(childUrl)) { // If the child URL is already in the pageMap
                 childPageId = getPageId(childUrl);
             } else {
                 childPageId = addPage(childUrl); // Add the child URL to the pageMap
             }
-
             // Add the child page ID to the parent's list of children
             if (!childPageIds.contains(childPageId)) {
                 childPageIds.add(childPageId);
             }
 
-            // Update the childParentMap to add the parent page ID to the child's list of parents
+            // Update the childParentMap to add the parent page ID to the child's list of parents (child -> parent)
             List<Integer> parentPageIds = (List<Integer>) childParentMap.get(childPageId);
             if (parentPageIds == null) {
                 parentPageIds = new ArrayList<>();

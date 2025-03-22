@@ -104,9 +104,8 @@ public class Crawler {
                 List<String> links = extractLinks(currentUrl);  
                 for (String link : links) { // add newly extracted links to URLsToVisit
                     urlQueue.add(link);
-                    dbManage.updateParentChildMap(links, currentUrl);
-
                 } 
+                dbManage.updateParentChildMap(links, currentUrl);
             } catch (IOException e) {
                 System.err.println("Failed to extract links from " + currentUrl + ": " + e.getMessage());
                 continue;

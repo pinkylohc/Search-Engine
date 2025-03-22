@@ -11,6 +11,8 @@ The readme.txt submitted for the project is in another file.
    javac -d bin -cp "lib/*" $(find src -name "*.java")
    java -cp "bin:lib/*" main.Main
    ```
+   * if you see `crawlerDB.db` and `crawlerDB.lg` file created in the root directory after run Main.java, the crawler should run correctly
+
 You can delete the .db and .lg file (for jdbm) before each run (to re-index those pages)
 
 
