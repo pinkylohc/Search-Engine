@@ -10,3 +10,5 @@ Run the Crawler (for Mac/Linux, can change to equivalent cmd in window)
 2. java -cp "bin:lib/*" main.Main
 
 Run the test program
+(Assuming that you have already run the Crawler)
+1. java -cp "bin:lib/*" main.testProgram
