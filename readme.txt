@@ -12,3 +12,5 @@ Run the Crawler (for Mac/Linux, can change to equivalent cmd in window)
 Run the test program
 (Assuming that you have already run the Crawler)
 1. java -cp "bin:lib/*" main.testProgram
+
+The results of the test program will be outputted in spiderResult.txt. There is no need to clear the file on successive runs; only the most recent results will be shown.
