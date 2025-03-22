@@ -57,7 +57,7 @@ public class DbManage {
         
     }
 
-    private HTree loadOrCreateHTree(String name) throws IOException {   // Load/create the HTree from the database, if it does not exist, create a new one
+    public HTree loadOrCreateHTree(String name) throws IOException {   // Load/create the HTree from the database, if it does not exist, create a new one
         long recId = recMan.getNamedObject(name);
         if (recId == 0) {
             HTree htree = HTree.createInstance(recMan);
