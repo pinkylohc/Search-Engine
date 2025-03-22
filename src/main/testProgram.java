@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.DefaultKeyboardFocusManager;
 import java.awt.image.IndexColorModel;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.Vector;
+import javax.xml.stream.events.EntityReference;
 
 import jdbm.helper.FastIterator;
 
@@ -25,11 +28,13 @@ import org.jsoup.select.Elements;
 import main.database.DbManage;
 import main.database.PageInfo;
 import main.utils.Indexer;
+import jdbm.htree.HTree;
 
 public class testProgram {
     String url = null; // Initialize to null, or a default URL
     int numPages = 30;
     Crawler webCrawler = new Crawler(numPages);
+    DbManage dbManage = new DbManage("crawlerDB");
 
     public static void main(String[] args) {  // Added main method
         testProgram program = new testProgram();
@@ -38,22 +43,50 @@ public class testProgram {
             fileOut.write("");
 
             program.webCrawler.crawl(program.url);
-            StringTokenizer lt = new StringTokenizer(program.webCrawler.visitedUrl); // Corrected this line
 
-            FastIterator iter = program.webCrawler.dbManage.keys;
-            String key;
-            while ((key = (String) iter.next()) != null) {
-                String currentURL = key;
-                int docId = program.webCrawler.dbManage.getPageId(key);
-                fileOut.append(program.webCrawler.indexPage.getTitle(key) + '\n');
-                fileOut.append(program.webCrawler.dbManage.getLastModified(docId) + ", ");
-                // fileOut.append(webCrawler.indexPage.get + '\n')
-                // fileOut.append(webCrawler.dbManage.getWordId(key))
-                FastIterator links = program.webCrawler.indexPage.getLinks(key);
-                String link;
-                while ((link = (String) links.next()) != null) {
-                    fileOut.append(link + '\n');
+            FastIterator iter = program.dbManage.get(pageIndex).keys();
+            Integer pageId;
+            while ((pageId = (Integer) iter.next()) != null) {
+
+                PageInfo pageInfo = (PageInfo) program.dbManage.pageIndex.get(pageId);
+
+                String title = pageInfo.getTitle();
+                String url = pageInfo.getUrl();
+                Date lastModified = pageInfo.getLastModified();
+                int size = pageInfo.getSize();
+
+                fileOut.append(title + '\n');
+                fileOut.append(url);
+                
+                fileOut.append(lastModified + ", ");
+                fileOut.append(String.valueOf(size) + '\n');
+
+                if (pageInfo.bodyWordList != null){
+                    StringBuilder bodyKeywordFreqBuilder = new StringBuilder();
+                    for (Map.Entry<Integer, Integer>entry: pageInfo.bodyWordList.entrySet()){
+                        int wordId = entry.getKey();
+                        int freq = entry.getValue();
+                        String word = (String) program.dbManage.wordidMap.get(wordId);
+                        if (word != null){
+                            bodyKeywordFreqBuilder.append(word).append(" ").append(freq).append("; ");
+                        }
+                    }
+                    if (bodyKeywordFreqBuilder.length() >0){
+                        bodyKeywordFreqBuilder.setLength(bodyKeywordFreqBuilder.length() - 2);
+                    }
+                    fileOut.append(bodyKeywordFreqBuilder.toString());
                 }
+
+                List<Integer> childPageIds = (List<Integer>) program.dbManage.parentChildMap.get(pageId);
+                if (childPageIds != null) {
+                    for (int childPageId : childPageIds) {
+                        String childUrl = (String) program.dbManage.pageidMap.get(childPageId);
+                        if (childUrl != null) {
+                            fileOut.append(childUrl + '\n');
+                        }
+                    }
+                }
+                
                 fileOut.append("-----------------\n"); // Added newline for better formatting
             }
 

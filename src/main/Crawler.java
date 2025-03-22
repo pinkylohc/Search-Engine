@@ -198,43 +198,49 @@ public class Crawler {
     //     dbManage.getD
     // }
     
-    public String getTitle(){
-        //url/page id (pageMap)
-        int pageid = dbManage.pageMap
-        //get pageID -> page index
-        //get page title
-    }
+    // public String getTitle(String url){
+    //     //url/page id (pageMap)
+    //     int pageid = dbManage.getPageId(url);
+    //     //get pageID -> page index
+    //     //get page title
+    // }
 
-    public String getURL(){
-        //pageid -> url (pageidmap)
-        //get page index
-        //get url
-    }
+    // public String getURL(int pageid){
+    //     //pageid -> url (pageidmap)
+    //     String url = dbManage.getUrl(pageid);
+    //     return url;
+    // }
 
-    public Date getLastModification(){
-        //url -> pageid (pageMap)
-        //get page id -> page index
-        //get last modification date
-    }
+    // public Date getLastModification(String url){
+    //     int pageid = dbManage.getPageId(url);
+    //     //get page id -> page index
+    //     //get last modification date
+    //     return dbManage.getLastModified(pageid);
+    // }
 
-    public Date getSize(){
-        //url -> pageid (pageMap)
-        //get page id -> page index
-        //get size
-    }
+    // public Date getSize(String url){
+    //     //url -> pageid (pageMap)
+    //     int pageid = dbManage.getPageId(url);
+    //     //get page id -> page index
+    //     //get size
+    // }
 
-    public Map<Integer,Integer> getKeywords(){
-        //url -> pageid (pageMap)
-        //get page id -> page index
-        //get body word list
-        //wordid -> words
-        //output as HTree?
-    }
+    // public Map<Integer,Integer> getKeywords(String url){
+    //     //url -> pageid (pageMap)
+    //     int pageid = dbManage.getPageId(url);
+    //     //get page id -> page index
+    //     //get body word list
+    //     //Map<Integer, Integer> wordList  = w
+    //     //wordid -> words
+    //     //dbManage.getWordId(word);
+    //     //output as HTree?
+    // }
 
-    public List<String> getChildren(){
-        //url -> pageid (pageMap)
-        //get parent page id -> page Index
-        //get list of child page IDs
-        //map to page urls via pageid index
-    }
+    // public List<String> getChildren(String url){
+    //     //url -> pageid (pageMap)
+    //     int pageid = dbManage.getPageId(url);
+    //     //get parent page id -> page Index
+    //     //get list of child page IDs
+    //     //map to page urls via pageid index
+    // }
 }
