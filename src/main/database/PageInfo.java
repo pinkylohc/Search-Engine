@@ -50,12 +50,21 @@ public class PageInfo implements Serializable{
         Document doc = Jsoup.connect(url).get();
         this.title = doc.title();
         this.lastModified = extractLastModified(doc);
-        this.size = doc.html().length();
+        this.size = extractSize(doc);
         if(this.lastModified == null) {
             this.lastModified = new Date();
         }
     }
 
+    private int extractSize(Document doc) {
+        String contentLengthHeader = doc.connection().response().header("Content-Length");
+        if (contentLengthHeader != null) {
+            return Integer.parseInt(contentLengthHeader);
+        } else {
+            // Fallback to calculating the size if Content-Length is not available
+            return doc.html().length();
+        }
+    }
 
     // Method to get the last modified date as a Date object
     private static Date extractLastModified(Document doc) {
