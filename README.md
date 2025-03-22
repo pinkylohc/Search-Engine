@@ -11,9 +11,17 @@ The readme.txt submitted for the project is in another file.
    javac -d bin -cp "lib/*" $(find src -name "*.java")
    java -cp "bin:lib/*" main.Main
    ```
-   * if you see `crawlerDB.db` and `crawlerDB.lg` file created in the root directory after run Main.java, the crawler should run correctly
+   * if you see the `crawlerDB.db` and `crawlerDB.lg` files created in the root directory after running Main.java, the crawler should have been run correctly
+   You can delete the .db and .lg file (for jdbm) before each run (to re-index those pages)
+  
+2. **Run the Test Program in testProgram.java:** (for Mac/Linux, can change to equivalent cmd in window):
+   ```sh
+   java -cp "bin:lib/*" main.testProgram
+   ```
+   * This assumes that you have already completed step 1.
+   * If you see a `spider_result.txt` file created in the root directory after running testProgram.java, the test program should have been run correctly.
+   * There is no need to delete the `spider_result.txt` file after each run as the contents are automatically updated to the most recent run's contents.
 
-You can delete the .db and .lg file (for jdbm) before each run (to re-index those pages)
 
 
 ## Folder Structure
