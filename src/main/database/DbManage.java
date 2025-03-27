@@ -37,6 +37,8 @@ public class DbManage {
     private HTree bodyIndex; // word ID -> list of posting
     private HTree titleIndex; // word ID -> list of posting
 
+    private HTree pageRank; // page id -> page rank score
+
     public DbManage(String recman) throws IOException { // create all Htree tables
         recMan = RecordManagerFactory.createRecordManager(recman);
         pageMap = loadOrCreateHTree("pageMap"); // String -> Integer
@@ -54,6 +56,8 @@ public class DbManage {
 
         bodyIndex = loadOrCreateHTree("bodyIndex"); // int -> List<Posting>
         titleIndex = loadOrCreateHTree("titleIndex"); // int -> List<Posting>
+
+        pageRank = loadOrCreateHTree("pageRank"); // int -> Double
         
     }
 

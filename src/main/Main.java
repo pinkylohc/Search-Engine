@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         try {
             // run the crawler and create all the database tables
-            Crawler crawler = new Crawler(30);
+            Crawler crawler = new Crawler(300);
             crawler.crawl("https://www.cse.ust.hk/~kwtleung/COMP4321/testpage.htm");
 
 
