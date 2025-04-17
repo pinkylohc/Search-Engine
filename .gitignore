@@ -1,0 +1,61 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage
+
+# production
+frontend/build
+
+# misc
+frontend/.DS_Store
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+
+
+###Spring Boot ###  
+HELP.md
+searchengine/target/
+searchengine/!.mvn/wrapper/maven-wrapper.jar
+searchengine/!**/src/main/**/target/
+searchengine/!**/src/test/**/target/
+
+### STS ###
+searchengine/.apt_generated
+searchengine/.classpath
+searchengine/.factorypath
+searchengine/.project
+searchengine/.settings
+searchengine/.springBeans
+searchengine/.sts4-cache
+
+### IntelliJ IDEA ###
+searchengine/.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+searchengine/nbproject/private/
+searchengine/nbbuild/
+searchengine/dist/
+searchengine/nbdist/
+searchengine/.nb-gradle/
+searchengine/build/
+searchengine/!**/src/main/**/build/
+searchengine/!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
