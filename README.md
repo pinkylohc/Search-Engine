@@ -27,12 +27,16 @@ Node.js v20.16.0 (https://nodejs.org/en/download) (can use `node -v` to verify i
 
 
 ### React.js (frontend)
-1. open a new terminal (ensure the current path is `comp4321-search-engine` folder)
+1. open a new terminal (ensure the current path is `comp4321-project` folder)
 2. `cd frontend`, change the current path to the react js folder
 3. `npm install`, please make sure you have installed Node.js
 4. `npm start`
 
 * you can open `localhost:3000` and see the web portal
+* remark: we have use local storage as storing some history record (you may need to use morden broswer to ensure local storage is available)
+
+### Run the Crawler
+In our web portal header, you can see there is crawl, you can click and direct to the crawler page and run the crawler form. (you may use the crawled page region above to check there is no indexed page exist first)
 
 ## Spring Boot End Point
 1. **/crawl**: starting crawler with starting url & max page
