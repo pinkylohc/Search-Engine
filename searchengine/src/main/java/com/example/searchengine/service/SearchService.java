@@ -232,7 +232,7 @@ public class SearchService {
 
             List<Posting> titlePostings  = dbManage.getTitlePosting(wordId);
             List<Posting> bodyPostings = dbManage.getBodyPosting(wordId);
-            processPostings(docTfMap, titlePostings, wordId, 5.0); // boost title tf score 
+            processPostings(docTfMap, titlePostings, wordId, 3.0); // boost title tf score 
             processPostings(docTfMap, bodyPostings, wordId, 1.0);
         }
 

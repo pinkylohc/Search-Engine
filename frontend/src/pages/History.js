@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getSearchHistory, clearSearchHistory } from '../utils/searchHistory';
+import { getSearchHistory, clearSearchHistory, getUserProfilo } from '../utils/searchHistory';
 import { 
   FiClock, FiSearch, FiTrash2, FiArrowRight, 
   FiPlus, FiMinus, FiFilter, 
-  FiX, FiInfo 
+  FiX, FiInfo,FiUser
 } from 'react-icons/fi';
 
 const History = () => {
@@ -14,15 +14,29 @@ const History = () => {
   const [selectedSearches, setSelectedSearches] = useState([]);
   const [searchWithinQueries, setSearchWithinQueries] = useState({});
   const [activeOperation, setActiveOperation] = useState(null);
+  const [profileKeywords, setProfileKeywords] = useState([]);
 
   // Load history from localStorage
   useEffect(() => {
     const history = getSearchHistory();
+
     const validHistory = history.filter(search => 
       search && search.query && Array.isArray(search.results));
     setSearchHistory(validHistory);
+    
+    // Load profile data
+    const profile = getUserProfilo();
+    setProfileKeywords(profile.keywords);
+
     setIsLoading(false);
   }, []);
+
+  // Clear profile data
+  const clearProfile = () => {
+    localStorage.removeItem('searchProfile');
+    setProfileKeywords([]);
+    //alert('Your search profile has been cleared');
+  };
 
   // Toggle search selection
   const toggleSearchSelection = (index) => {
@@ -56,6 +70,9 @@ const History = () => {
         }
       });
     });
+
+    // Sort merged results by score in descending order
+    mergedResults.sort((a, b) => (b.score || 0) - (a.score || 0));
     
     navigate('/results', {
       state: {
@@ -95,6 +112,9 @@ const History = () => {
       .map(result => ({
         ...result,
       }));
+
+      // Sort merged results by score in descending order
+    commonResults.sort((a, b) => (b.score || 0) - (a.score || 0));
     
     navigate('/results', {
       state: {
@@ -197,15 +217,55 @@ const History = () => {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Search History</h1>
-          {searchHistory.length > 0 && (
-            <button
-              onClick={handleClearHistory}
-              className="flex items-center gap-2 text-red-600 hover:text-red-800 transition-colors"
-            >
-              <FiTrash2 /> Clear All
-            </button>
-          )}
+          <div className="flex gap-4">
+            {searchHistory.length > 0 && (
+              <button
+                onClick={handleClearHistory}
+                className="flex items-center gap-2 text-red-600 hover:text-red-800 transition-colors"
+              >
+                <FiTrash2 /> Clear History
+              </button>
+            )}
+            {profileKeywords.length > 0 && (
+              <button
+                onClick={clearProfile}
+                className="flex items-center gap-2 text-purple-600 hover:text-purple-800 transition-colors"
+              >
+                <FiUser /> Clear Profile
+              </button>
+            )}
+          </div>
         </div>
+
+        {/* Profile Display Section */}
+        {profileKeywords.length > 0 && (
+          <div className="bg-purple-50 p-4 rounded-lg mb-6 border border-purple-100">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-medium text-purple-800 mb-2 flex items-center gap-2">
+                  <FiUser /> Your Search Profile
+                </h3>
+                <p className="text-sm text-purple-600 mb-3">
+                  Based on pages you've clicked, showing your most frequent keywords
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {profileKeywords.map((kw, i) => (
+                    <span 
+                      key={i} 
+                      className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm flex items-center"
+                    >
+                      <span className="font-medium">{kw.keyword}</span>
+                      <span className="text-xs ml-1 bg-purple-200 text-purple-800 rounded-full px-1.5 py-0.5">
+                        {kw.frequency}
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        )}
 
         {/* Operation Guidance */}
         {activeOperation && (

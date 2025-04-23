@@ -95,7 +95,7 @@ public class CrawlerService {
             pagesCrawled++;
         }
         pageRankService.computePageRank(); // compute page rank after crawling
-        dbManage.printPageRank(); // print page rank
+        //dbManage.printPageRank(); // print page rank
         dbManage.commit(); // commit the changes to the database
 
     }
@@ -103,16 +103,31 @@ public class CrawlerService {
     // extract links in url and return them (for BFS)
     public List<String> extractLinks(String url) throws IOException {
         List<String> links = new ArrayList<>();
-        Document doc = Jsoup.connect(url).get();
-        Elements linkElements = doc.select("a[href]");
-        for (Element linkElement : linkElements) {
-            String link = linkElement.attr("abs:href");
-            // Check if the link starts with "http" or "https"
-            if (link.startsWith("http://") || link.startsWith("https://")) {
-                links.add(link);
+        int maxRetries = 3; // Maximum number of retries
+        int retryCount = 0;
+        boolean success = false;
+
+        while (retryCount < maxRetries && !success) {
+            try {
+                Document doc = Jsoup.connect(url).get();
+                Elements linkElements = doc.select("a[href]");
+                for (Element linkElement : linkElements) {
+                    String link = linkElement.attr("abs:href");
+                    // Check if the link starts with "http" or "https"
+                    if (link.startsWith("http://") || link.startsWith("https://")) {
+                        links.add(link);
+                    }
+                }
+                success = true; // Mark as successful if no exception occurs
+            } catch (IOException e) {
+                retryCount++;
+                System.err.println("Failed to extract links from " + url + " (Attempt " + retryCount + " of " + maxRetries + "): " + e.getMessage());
+                if (retryCount >= maxRetries) {
+                    throw e; // Rethrow the exception after max retries
+                }
+            }
         }
-        }
-        return links; 
+        return links;
     }
 
     // get crawled page
@@ -140,3 +155,4 @@ public class CrawlerService {
         }
     }
 }
+

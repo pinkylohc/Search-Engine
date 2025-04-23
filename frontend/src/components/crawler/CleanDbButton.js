@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FaInfoCircle, FaTrash, FaSync, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const CleanDatabaseButton = ({ initialUrl, initialPageCount = 297 }) => {
+const CleanDatabaseButton = () => {
   const [isCleaning, setIsCleaning] = useState(false);
   const [message, setMessage] = useState('');
   const [isSectionVisible, setIsSectionVisible] = useState(true); // Toggle state for the section
@@ -46,6 +46,7 @@ const CleanDatabaseButton = ({ initialUrl, initialPageCount = 297 }) => {
       {/* Toggleable Content */}
       {isSectionVisible && (
         <div className="mt-4 space-y-4">
+          
           {/* Information Box */}
           <div className="bg-blue-50 border-l-4 border-blue-400 p-4 rounded-md">
             <div className="flex">
@@ -53,14 +54,16 @@ const CleanDatabaseButton = ({ initialUrl, initialPageCount = 297 }) => {
                 <FaInfoCircle className="h-5 w-5 text-blue-400" />
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-blue-800">Database Status</h3>
+                <h3 className="text-sm font-medium text-blue-800">Initial Status</h3>
                 <div className="mt-2 text-sm text-blue-700">
                   <p>
-                    We've initially crawled <span className="font-semibold">{initialPageCount} pages</span> from{' '}
-                    <span className="font-semibold text-blue-900">{initialUrl}</span>.
+                    No pages have been crawled yet. Please use the crawl form below to start indexing pages.
                   </p>
                   <p className="mt-1">
-                    To reindex these pages, clean the database and crawl again using the form below.
+                    To reindex pages, first clean the database and then initiate a new crawl using the form below.
+                  </p>
+                  <p className="mt-1 text-red-600 font-semibold">
+                    Warning: Clicking the "Clean Database" button will delete all database records. Please proceed with caution.
                   </p>
                 </div>
               </div>
@@ -104,7 +107,7 @@ const CleanDatabaseButton = ({ initialUrl, initialPageCount = 297 }) => {
 
           {/* Additional Guidance */}
           <p className="text-sm text-gray-500 italic">
-            After cleaning the database, refresh the crawled pages below and use the crawler form below to reindex pages.
+            After cleaning the database, refresh the crawled pages below for checking and use the crawler form to reindex pages.
           </p>
         </div>
       )}

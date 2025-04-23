@@ -16,6 +16,65 @@ const ResultItem = memo(({ result, index, onSimilarPagesClick }) => {
     });
   };
 
+  const handlePageClick = () => {
+    if (result.keywordsWithFrequency) {
+      // Get current profile from localStorage
+      const currentProfile = JSON.parse(localStorage.getItem('searchProfile')) || { 
+        keywords: [],
+        lastUpdated: Date.now() // Add timestamp for the entire profile
+      };
+      
+      // Get top 5 keywords from this result
+      const topKeywords = result.keywordsWithFrequency.slice(0, 5);
+      
+      // Update profile with new keywords
+      const updatedKeywords = [...currentProfile.keywords];
+      
+      const currentTime = Date.now();
+      
+      topKeywords.forEach(kw => {
+        const existingIndex = updatedKeywords.findIndex(item => item.keyword === kw.keyword);
+        if (existingIndex >= 0) {
+          // Keyword exists - update frequency and check if we should update URL
+          updatedKeywords[existingIndex].frequency += 1;
+          
+          // If same frequency as others, update to most recent URL
+          if (updatedKeywords[existingIndex].frequency === kw.frequency) {
+            updatedKeywords[existingIndex] = {
+              ...updatedKeywords[existingIndex],
+              lastUrl: result.url, // Store the most recent URL
+              lastUpdated: currentTime // Store when this was updated
+            };
+          }
+        } else {
+          // New keyword - add with initial data
+          updatedKeywords.push({ 
+            keyword: kw.keyword,
+            frequency: 1,
+            lastUrl: result.url, // Store the URL where this keyword was found
+            lastUpdated: currentTime // Store when this was added
+          });
+        }
+      });
+  
+      // Sort by frequency (descending) and then by lastUpdated (descending)
+      const sortedKeywords = updatedKeywords.sort((a, b) => {
+        // First sort by frequency (higher frequency comes first)
+        if (b.frequency !== a.frequency) {
+          return b.frequency - a.frequency;
+        }
+        // If frequencies are equal, sort by most recent
+        return b.lastUpdated - a.lastUpdated;
+      }).slice(0, 10); // Keep top 20 keywords
+      
+      // Save back to localStorage
+      localStorage.setItem('searchProfile', JSON.stringify({ 
+        keywords: sortedKeywords,
+        lastUpdated: currentTime
+      }));
+    }
+  };
+
   // handle get similar page button
   const handleSimilarPages = () => {
     if (result.keywordsWithFrequency && result.keywordsWithFrequency.length > 0) {
@@ -27,7 +86,10 @@ const ResultItem = memo(({ result, index, onSimilarPagesClick }) => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow mb-4 border border-gray-100">
+    <div 
+      className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow mb-4 border border-gray-100"
+      onClick={handlePageClick}
+    >
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1 min-w-0"> {/* Added min-w-0 to prevent overflow issues */}
           <div className="flex items-center mb-1">

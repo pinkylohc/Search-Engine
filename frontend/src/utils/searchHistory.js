@@ -1,4 +1,9 @@
 // utils/searchHistory.js
+
+// if fail -> not store??
+// store user preference (click history???)
+
+
 export const saveSearch = (query, results) => {
     try {
         // First try to save normally
@@ -37,7 +42,7 @@ const trySaveSearch = (query, results) => {
 const handleStorageFull = (query, results) => {
     let searches = getSearchHistory();
     
-    // Remove 10% of oldest records or at least 1
+    // Remove 50% of oldest records or at least 1
     const removeCount = Math.max(1, Math.floor(searches.length * 0.5));
     const trimmedSearches = searches.slice(0, searches.length - removeCount);
     
@@ -55,6 +60,16 @@ export const getSearchHistory = () => {
     } catch (e) {
         console.error('Error parsing search history', e);
         return [];
+    }
+};
+
+export const getUserProfilo = () => {
+    try {
+        const profile = localStorage.getItem('searchProfile');
+        return profile ? JSON.parse(profile) : null;
+    } catch(e){
+        console.error('Error parsing user profile', e);
+        return null;
     }
 };
 

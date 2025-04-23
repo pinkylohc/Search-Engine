@@ -1,5 +1,5 @@
-import React from 'react';
-import { FiSearch, FiX, FiBarChart2, FiZap } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiSearch, FiX, FiBarChart2, FiZap, FiUser, FiPlus } from 'react-icons/fi';
 
 const SearchBar = ({ 
   query, 
@@ -14,6 +14,29 @@ const SearchBar = ({
   searchOperator,
   setSearchOperator
 }) => {
+  const [showProfileTooltip, setShowProfileTooltip] = useState(false);
+
+  // Get profile keywords from localStorage
+  const getProfileKeywords = () => {
+    const profile = JSON.parse(localStorage.getItem('searchProfile')) || { keywords: [] };
+    return profile.keywords.slice(0, 3).map(kw => kw.keyword);
+  };
+
+  // Add profile keywords to current query
+  const addProfileKeywords = () => {
+    const profileKeywords = getProfileKeywords();
+    if (profileKeywords.length === 0) {
+      alert('Your profile has no keywords yet. Click on search results to build your profile.');
+      return;
+    }
+    
+    // Add keywords to the current query
+    const newQuery = [query, ...profileKeywords].filter(Boolean).join(' ');
+    setQuery(newQuery);
+    setShowProfileTooltip(false);
+  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSearch();
@@ -90,6 +113,45 @@ const SearchBar = ({
           </div>
         </div>
 
+        {/* Profile keywords button */}
+        <div className="relative mt-2 ml-2">
+          <button
+            type="button"
+            onClick={addProfileKeywords}
+            onMouseEnter={() => setShowProfileTooltip(true)}
+            onMouseLeave={() => setShowProfileTooltip(false)}
+            className="h-full px-3 border-2 border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 text-gray-700 flex items-center"
+            title="Add profile keywords"
+          >
+            <FiUser className="mr-1" />
+            <FiPlus size={12} />
+            <span className="ml-1 text-sm">Enhance Query with Your Profile</span>
+          </button>
+          
+          {/* Tooltip showing what will be added */}
+          {showProfileTooltip && (
+            <div className="absolute z-10 left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 border border-gray-200">
+              <div className="px-3 py-2 text-xs text-gray-700">
+                {getProfileKeywords().length > 0 ? (
+                  <>
+                    <p className="font-medium">Adding these keywords:</p>
+                    <ul className="mt-1 space-y-1">
+                      {getProfileKeywords().map((kw, i) => (
+                        <li key={i} className="flex items-center">
+                          <span className="bg-blue-100 text-blue-800 text-xs px-1.5 py-0.5 rounded mr-1">{i+1}</span>
+                          {kw}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p>Your profile is empty. Click more URL from search result to build it.</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Visual divider */}
         <div className="relative my-3">
           <div className="absolute inset-0 flex items-center">
@@ -101,9 +163,14 @@ const SearchBar = ({
             </span>
           </div>
         </div>
+        
 
         {/* Compact options row */}
         <div className="flex flex-wrap items-center justify-between gap-3 mt-3">
+
+            
+
+
           {/* Boolean operator section */}
           <div className="bg-blue-100 border border-blue-200 rounded-lg p-2 flex-1">
             <div className="flex items-center">
