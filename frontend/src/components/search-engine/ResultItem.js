@@ -88,7 +88,6 @@ const ResultItem = memo(({ result, index, onSimilarPagesClick }) => {
   return (
     <div 
       className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow mb-4 border border-gray-100"
-      onClick={handlePageClick}
     >
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1 min-w-0"> {/* Added min-w-0 to prevent overflow issues */}
@@ -97,7 +96,7 @@ const ResultItem = memo(({ result, index, onSimilarPagesClick }) => {
               #{index + 1}
             </span>
             <h2 className="text-xl font-semibold text-blue-700 hover:text-blue-800 transition-colors truncate">
-              <a href={result.url} target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <a href={result.url} target="_blank" rel="noopener noreferrer" className="flex items-center" onClick={handlePageClick}>
                 {result.title}
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -107,7 +106,8 @@ const ResultItem = memo(({ result, index, onSimilarPagesClick }) => {
           </div>
           
           {/* URL with better overflow handling */}
-          <div className="mb-3">
+          <div className="mb-3"
+          onClick={handlePageClick}>
             <a 
               href={result.url} 
               target="_blank" 

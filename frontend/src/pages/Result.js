@@ -21,7 +21,7 @@ const Result = () => {
   const [Requery, setQuery] = useState(query || '');
   const [showFilters, setShowFilters] = useState(false);
   const [filteredResults, setFilteredResults] = useState(initialResults);
-  const [usePageRank, setUsePageRank] = useState(usedPageRank);
+  const [usePageRank, setUsePageRank] = useState(true);
   const [searchOperator, setSearchOperator] = useState(operator);
   const [currentSearchType, setCurrentSearchType] = useState(searchType);
   const [triggerSearch, setTriggerSearch] = useState(false);

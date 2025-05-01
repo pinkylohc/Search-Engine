@@ -23,7 +23,7 @@ Frontend installation:
 2. `cd searchengine`, change current path to the spring boot folder
 3. `./mvnw spring-boot:run`, maven is used 
 
-* you can verify the set up by visiiting `http://localhost:8080` and see a "Hello World" message
+* you can verify the set up by visiting `http://localhost:8080` and see a "Hello World" message
 
 
 ### 3. Run the React.js (frontend)
