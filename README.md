@@ -37,7 +37,7 @@ Frontend installation:
 
 ### 4. Run the Crawler
 1. please run the crawler before perfrom any searching
-2. In our web portal header, click the 'crawl' bar
+2. In our web portal header, click 'Crawler' in header bar
 3. Navigate to the crawler page and use the crawler form below to start (this may take a few minutes)
 
 ### 5. Explore the Web Portal

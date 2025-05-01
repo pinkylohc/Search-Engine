@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const CrawlerForm = () => {
   const [formData, setFormData] = useState({
-    startingUrl: '',
+    startingUrl: 'https://www.cse.ust.hk/~kwtleung/COMP4321/testpage.htm',
     maxPages: 300
   });
   const [isSubmitting, setIsSubmitting] = useState(false);

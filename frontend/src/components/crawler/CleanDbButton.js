@@ -57,7 +57,7 @@ const CleanDatabaseButton = () => {
                 <h3 className="text-sm font-medium text-blue-800">Initial Status</h3>
                 <div className="mt-2 text-sm text-blue-700">
                   <p>
-                    No pages have been crawled yet. Please use the crawl form below to start indexing pages.
+                    No pages have been crawled initially. Please use the crawl form below to start indexing pages.
                   </p>
                   <p className="mt-1">
                     To reindex pages, first clean the database and then initiate a new crawl using the form below.
