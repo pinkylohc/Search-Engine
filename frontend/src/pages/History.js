@@ -26,7 +26,9 @@ const History = () => {
     
     // Load profile data
     const profile = getUserProfilo();
-    setProfileKeywords(profile.keywords);
+    if (profile && profile.keywords != null) {
+      setProfileKeywords(profile.keywords);
+    }
 
     setIsLoading(false);
   }, []);
