@@ -6,6 +6,7 @@ spring boot 3.4.4 <br>
 maven <br>
 jsoup 1.19.1 <br>
 jdbm 1.0 <br>
+react
 
 VScode extensions needed (if you run in VScode):
 1. Extension Pack for Java
@@ -33,7 +34,7 @@ Frontend installation:
 4. `npm start`
 
 * you can open `localhost:3000` and see the web portal
-* remark: we have use local storage to store some history records (you may need to use the morden broswers to ensure local storage is available)
+* remark: we have use local storage to store some history records (you may need to use the morden broswers to ensure local storage is available) && ensure you don't have a previous local storage with item name ('searchHistory' and 'searchProfile')
 
 ### 4. Run the Crawler
 1. please run the crawler before perfrom any searching
