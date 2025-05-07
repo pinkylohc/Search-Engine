@@ -69,7 +69,7 @@ export const getUserProfilo = () => {
         return profile ? JSON.parse(profile) : null;
     } catch(e){
         console.error('Error parsing user profile', e);
-        return null;
+        return [];
     }
 };
 
