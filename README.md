@@ -44,6 +44,12 @@ Frontend installation:
 ### 5. Explore the Web Portal
 <br>
 
+
+
+
+
+
+
 ## Spring Boot End Point
 1. **/crawl**: starting crawler with starting url & max page
 2. **/crawled-pages**: get the detail of the crawled page in .db
@@ -125,3 +131,27 @@ _** don’t use the pageIndex to retrieve ‘URL’ for child page, use mapping 
 *   **Structure**:
     *   **Key**: Integer (Word ID)
     *   **Value**: List `<Posting>` (refer to `Posting.java` for more info)
+
+
+### pageRank
+
+*   **Description**: Store the PageRank score for each indexed page
+*   **Structure**:
+    *   **Key**: Integer (Page ID)
+    *   **Value**: Integer (PR Score)
+
+### searchCache
+
+*   **Description**: Maps word IDs to lists of postings for the title of the page.
+*   **Structure**:
+    *   **Key**: String (Query)
+    *   **Value**: List `<PageResult>` 
+
+
+### cacheMetadata
+
+*   **Description**: Maps word IDs to lists of postings for the title of the page.
+*   **Structure**:
+    *   **Key**: String (Query)
+    *   **Value**: Date (last Accessed), Integer (Frequency)
+
