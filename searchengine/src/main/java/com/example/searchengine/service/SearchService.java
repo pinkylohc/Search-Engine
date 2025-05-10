@@ -198,7 +198,7 @@ public class SearchService {
             List<Posting> bodyPostings = dbManage.getBodyPosting(wordId);
             addDocsFromPostings(docsWithTerm, titlePostings);
             addDocsFromPostings(docsWithTerm, bodyPostings);
-            double idf = Math.log((double) totalDocs / (docsWithTerm.size() + 1)); // +1 for avoid div by 0 and smoothing effect
+            double idf = Math.log(1 + (double) totalDocs / (docsWithTerm.size())); // +1 for avoid div by 0 and smoothing effect
             idfMap.put(wordId, idf);
 
             ///////////////////// Debug output showing both ID and term

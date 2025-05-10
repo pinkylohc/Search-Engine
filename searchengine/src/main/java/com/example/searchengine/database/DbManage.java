@@ -243,8 +243,22 @@ public class DbManage {
             }
         }
         
-        // Sort by frequency in descending order
-        topQueries.sort((a, b) -> b.getValue().compareTo(a.getValue()));
+        // Sort by frequency in descending order, then by lastAccessed in descending order
+        topQueries.sort((a, b) -> {
+            int freqCompare = b.getValue().compareTo(a.getValue());
+            if (freqCompare != 0) {
+                return freqCompare;
+            }
+            // If frequencies are equal, compare by lastAccessed
+            try {
+                CacheMetadata metadataA = (CacheMetadata) cacheMetadata.get(a.getKey());
+                CacheMetadata metadataB = (CacheMetadata) cacheMetadata.get(b.getKey());
+                return Long.compare(metadataB.lastAccessed, metadataA.lastAccessed);
+            } catch (IOException e) {
+                // If there's an error accessing metadata, fall back to frequency comparison
+                return freqCompare;
+            }
+        });
         
         // Return top N results
         return topQueries.stream().limit(limit).collect(Collectors.toList());

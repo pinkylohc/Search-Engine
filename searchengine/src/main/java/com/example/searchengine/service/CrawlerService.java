@@ -44,7 +44,7 @@ public class CrawlerService implements DisposableBean {
         this.indexer = indexer;
         this.pageRankService = pageRankService;
         // Create a thread pool with number of threads equal to available processors
-        this.executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        this.executorService = Executors.newFixedThreadPool(20);
     }
 
     public void crawl(String startingUrl, int maxPages) throws IOException {
@@ -102,8 +102,8 @@ public class CrawlerService implements DisposableBean {
 
         try {
             // Wait for the crawling to complete or timeout after 1 minute
-            if (!latch.await(1, TimeUnit.MINUTES)) {
-                System.out.println("Crawling timed out after 1 minute");
+            if (!latch.await(3, TimeUnit.MINUTES)) {
+                System.out.println("Crawling timed out after 3 minute");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
